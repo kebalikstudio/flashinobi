@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashinobi - Feedback Program</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0a0c;
+            --secondary-bg: #1a1a2e;
+            --accent-color-1: #ff6b6b; /* Red */
+            --accent-color-2: #4ecdc4; /* Teal */
+            --text-color-light: #e0e0e0;
+            --text-color-medium: #b0b0b0;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-effect: backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 50%, #16213e 100%);
+            color: var(--text-color-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 80px;
+            flex-grow: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .game-title {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2), #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 25px rgba(255, 107, 107, 0.3);
+            animation: textGlow 3s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 20px rgba(255, 107, 107, 0.3), 0 0 30px rgba(78, 205, 196, 0.2); }
+            to { text-shadow: 0 0 25px rgba(78, 205, 196, 0.5), 0 0 35px rgba(255, 107, 107, 0.4); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-color-medium);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .platform-info {
+            font-size: 1rem;
+            color: var(--text-color-medium);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .platform-info .material-icons {
+            font-size: 1.5rem;
+            color: var(--accent-color-2);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .navbar-language-toggle {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .navbar-flag-btn {
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--text-color-light);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .navbar-flag-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-flag-btn.active {
+            background: linear-gradient(45deg, var(--accent-color-2), #45b7d1);
+            box-shadow: 0 2px 8px rgba(78, 205, 196, 0.3);
+            color: white;
+        }
+
+        .navbar-flag {
+            font-size: 1.1rem;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .nav-btn.download {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .nav-btn.feedback {
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+            color: white;
+        }
+
+        .nav-btn.current {
+            border-color: var(--accent-color-2);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+            display: flex;
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 10px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            max-width: calc(100vw - 40px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .flag-btn {
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: var(--text-color-light);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .flag-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .flag-btn.active {
+            background: linear-gradient(45deg, var(--accent-color-2), #45b7d1);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            color: white;
+        }
+
+        .flag {
+            font-size: 1.3rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.7s ease-in-out;
+        }
+
+        .section-card:hover::before {
+            left: 150%;
+        }
+
+        .credit-info h3 {
+            font-size: 2.5rem;
+            color: var(--accent-color-2);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 40px;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-btn {
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: 1;
+        }
+
+        .action-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .action-btn > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-icon {
+            font-size: 2.2rem;
+        }
+
+        .btn-text {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .btn-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .credit-highlight {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            border: 2px solid var(--accent-color-2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credit-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(78, 205, 196, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .credit-highlight h3 {
+            position: relative;
+            z-index: 2;
+            color: var(--accent-color-2);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .credit-highlight p {
+            position: relative;
+            z-index: 2;
+            color: var(--text-color-light);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .credit-highlight .highlight-number {
+            color: var(--accent-color-1);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .ingame-preview {
+            background: linear-gradient(45deg, rgba(78, 205, 196, 0.15), rgba(255, 107, 107, 0.15));
+            border: 2px solid var(--accent-color-2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: var(--text-color-light);
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+
+        .ingame-preview .material-icons {
+            font-size: 1.8rem;
+            color: var(--accent-color-2);
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            from { 
+                box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+                border-color: var(--accent-color-2);
+            }
+            to { 
+                box-shadow: 0 0 20px rgba(78, 205, 196, 0.6);
+                border-color: var(--accent-color-1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 193, 7, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+            }
+        }
+
+        .requirements-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .requirements-list li {
+            color: var(--text-color-medium);
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirements-list .material-icons {
+            color: var(--accent-color-2);
+            font-size: 1.2rem;
+        }
+
+        .day-tracker {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px 40px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            width: 100vw;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .day-tracker h3 {
+            font-size: 2.5rem;
+            color: var(--accent-color-2);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+            font-weight: 700;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(14, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: none;
+        }
+
+        .day-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 15px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-box.inactive {
+            opacity: 0.5;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .day-box.completed {
+            background: linear-gradient(45deg, rgba(78, 205, 196, 0.1), rgba(255, 107, 107, 0.1));
+            border-color: var(--accent-color-2);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .day-box.completed .day-status .material-icons {
+            color: var(--accent-color-2);
+        }
+
+        .day-box.active {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.15), rgba(255, 152, 0, 0.15));
+            border-color: #ffc107;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .day-box.active .day-number {
+            color: #ffc107;
+            font-weight: 800;
+        }
+
+        .day-box.active .day-date {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .day-box.active .day-status .material-icons {
+            display: none;
+        }
+
+        .day-box.active .day-status::after {
+            content: 'TODAY';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #ffc107, #ff9800);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 900;
+            padding: 5px 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.7);
+            border: 2px solid #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            animation: bounce 1s infinite;
+        }
+
+
+
+        .day-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-color-1);
+            margin-bottom: 6px;
+        }
+
+        .day-date {
+            font-size: 1rem;
+            color: var(--text-color-medium);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .day-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day-status .material-icons {
+            font-size: 2rem;
+            color: var(--text-color-medium);
+            transition: all 0.3s ease;
+        }
+
+        .day-box.completed .day-status .material-icons {
+            content: 'check_circle';
+            color: var(--accent-color-2);
+        }
+
+        .tracker-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tracker-info p {
+            color: var(--text-color-medium);
+            font-size: 1rem;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tracker-info .material-icons {
+            font-size: 1.2rem;
+            color: var(--accent-color-2);
+        }
+
+        .name-guidelines {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .name-guidelines h4 {
+            color: var(--accent-color-2);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .name-guidelines h4 .material-icons {
+            font-size: 1.5rem;
+        }
+
+        .guidelines-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .guideline-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .guideline-section h5 {
+            color: var(--text-color-light);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guideline-section h5 .material-icons {
+            font-size: 1.2rem;
+        }
+
+        .guideline-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .guideline-section li {
+            color: var(--text-color-medium);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .guideline-section li::before {
+            content: '•';
+            color: var(--accent-color-2);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .guideline-section:first-child li::before {
+            color: var(--accent-color-2);
+        }
+
+        .guideline-section:last-child li::before {
+            color: var(--accent-color-1);
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-info p {
+            color: var(--text-color-medium);
+            margin: 12px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .contact-info p .material-icons {
+            font-size: 1.3rem;
+            color: var(--accent-color-1);
+        }
+
+        .contact-info strong {
+            color: var(--accent-color-2);
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer .material-icons {
+            font-size: 1.4rem;
+            vertical-align: middle;
+            margin: 0 8px;
+            animation: float 2s ease-in-out infinite alternate;
+            color: var(--accent-color-2);
+        }
+        .footer .material-icons:nth-child(2) {
+            animation-delay: 0.5s;
+            color: var(--accent-color-1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        a {
+            color: var(--accent-color-2);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color-1);
+            text-decoration: underline;
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 0;
+            }
+            .navbar-content {
+                padding: 0 15px;
+            }
+            .navbar-logo {
+                font-size: 1.5rem;
+            }
+            .navbar-nav {
+                gap: 15px;
+            }
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            .navbar-language-toggle {
+                gap: 6px;
+                padding: 3px;
+            }
+            .navbar-flag-btn {
+                padding: 5px 8px;
+                font-size: 0.8rem;
+                gap: 4px;
+            }
+            .navbar-flag {
+                font-size: 1rem;
+            }
+            .game-title {
+                font-size: 3rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            .container {
+                padding: 15px;
+                padding-top: 90px;
+            }
+            .section-card {
+                padding: 30px 20px;
+                margin: 30px 0;
+            }
+            .day-tracker {
+                padding: 25px 20px;
+            }
+            .credit-info h3, .day-tracker h3 {
+                font-size: 2rem;
+            }
+            .action-btn {
+                min-width: unset;
+                width: 90%;
+                padding: 18px 25px;
+            }
+            .language-toggle {
+                top: 15px;
+                right: 15px;
+                gap: 5px;
+                padding: 3px;
+                max-width: calc(100vw - 30px);
+                z-index: 50;
+            }
+            .flag-btn {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+                gap: 5px;
+            }
+            .flag {
+                font-size: 1.1rem;
+            }
+            .contact-info p {
+                font-size: 1rem;
+            }
+            .days-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 10px;
+            }
+            .day-box {
+                padding: 18px 12px;
+                min-height: 90px;
+            }
+            .day-number {
+                font-size: 1rem;
+            }
+            .day-date {
+                font-size: 0.8rem;
+            }
+            .day-status .material-icons {
+                font-size: 1.3rem;
+            }
+            .guidelines-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .name-guidelines {
+                padding: 20px 15px;
+            }
+            .guideline-section {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 8px 0;
+            }
+            .navbar-content {
+                padding: 0 10px;
+            }
+            .navbar-logo {
+                font-size: 1.3rem;
+            }
+            .navbar-nav {
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .navbar-language-toggle {
+                gap: 4px;
+                padding: 2px;
+            }
+            .navbar-flag-btn {
+                padding: 4px 6px;
+                font-size: 0.7rem;
+                gap: 2px;
+            }
+            .navbar-flag {
+                font-size: 0.8rem;
+            }
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+                max-width: calc(100vw - 20px);
+                gap: 3px;
+                padding: 2px;
+            }
+            .flag-btn {
+                padding: 4px 8px;
+                font-size: 0.8rem;
+                gap: 3px;
+            }
+            .flag {
+                font-size: 1rem;
+            }
+            .container {
+                padding-top: 100px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .navbar-nav {
+                gap: 6px;
+            }
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            .navbar-language-toggle {
+                gap: 3px;
+                padding: 1px;
+            }
+            .navbar-flag-btn {
+                padding: 3px 5px;
+                font-size: 0.65rem;
+                gap: 2px;
+            }
+            .navbar-flag {
+                font-size: 0.75rem;
+            }
+            .container {
+                padding-top: 110px;
+            }
+            .days-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 8px;
+            }
+            .day-box {
+                padding: 12px 8px;
+                min-height: 70px;
+            }
+            .day-box.active .day-status::after {
+                font-size: 0.55rem;
+                padding: 3px 6px;
+            }
+            .day-number {
+                font-size: 0.7rem;
+            }
+            .day-date {
+                font-size: 0.6rem;
+            }
+            .tracker-info p {
+                font-size: 0.7rem;
+            }
+            .requirements-list li {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+            .credit-highlight {
+                padding: 8px;
+                font-size: 0.7rem;
+            }
+            .name-guidelines {
+                padding: 12px 8px;
+            }
+            .name-guidelines h4 {
+                font-size: 0.9rem;
+            }
+            .name-guidelines li {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+            .ingame-preview {
+                padding: 12px 8px;
+            }
+            .ingame-preview h4 {
+                font-size: 0.9rem;
+            }
+            .ingame-preview p {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Extra small devices (320px and below) */
+        @media (max-width: 320px) {
+            .navbar {
+                padding: 6px 0;
+            }
+            .navbar-content {
+                padding: 0 8px;
+            }
+            .navbar-logo {
+                font-size: 1rem;
+            }
+            .navbar-nav {
+                gap: 4px;
+                flex-wrap: wrap;
+            }
+            .nav-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+            .navbar-language-toggle {
+                gap: 2px;
+                padding: 1px;
+            }
+            .navbar-flag-btn {
+                padding: 2px 4px;
+                font-size: 0.6rem;
+                gap: 1px;
+            }
+            .navbar-flag {
+                font-size: 0.65rem;
+            }
+            .game-title {
+                font-size: 1.8rem;
+            }
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            .container {
+                padding: 8px;
+                padding-top: 70px;
+            }
+            .section-card {
+                padding: 15px 10px;
+                margin: 15px 0;
+            }
+            .day-tracker {
+                padding: 20px 15px;
+            }
+            .credit-info h3, .day-tracker h3 {
+                font-size: 1.3rem;
+            }
+            .action-btn {
+                width: 98%;
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+            .days-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 6px;
+            }
+            .day-box {
+                padding: 10px 6px;
+                min-height: 60px;
+            }
+            .day-box.active .day-status::after {
+                font-size: 0.5rem;
+                padding: 2px 5px;
+            }
+            .day-number {
+                font-size: 0.65rem;
+            }
+            .day-date {
+                font-size: 0.55rem;
+            }
+            .name-guidelines {
+                padding: 10px 6px;
+            }
+            .name-guidelines h4 {
+                font-size: 0.85rem;
+            }
+            .name-guidelines li {
+                font-size: 0.65rem;
+                margin-bottom: 3px;
+            }
+            .ingame-preview {
+                padding: 10px 6px;
+            }
+            .ingame-preview h4 {
+                font-size: 0.85rem;
+            }
+            .ingame-preview p {
+                font-size: 0.65rem;
+            }
+            .tracker-info p {
+                font-size: 0.65rem;
+            }
+            .requirements-list li {
+                font-size: 0.65rem;
+                margin-bottom: 3px;
+            }
+            .credit-highlight {
+                padding: 6px;
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-toggle">
+        <button class="flag-btn active" onclick="switchLanguage('en')">
+            <span class="flag">🇺🇸</span>
+            <span>EN</span>
+        </button>
+        <button class="flag-btn" onclick="switchLanguage('id')">
+            <span class="flag">🇮🇩</span>
+            <span>ID</span>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="download.html" class="navbar-logo">FLASHINOBI</a>
+            <div class="navbar-nav">
+                <a href="download.html" class="nav-btn download">
+                    <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">download</span>
+                    Download
+                </a>
+                <a href="feedback.html" class="nav-btn feedback current">
+                    <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">rate_review</span>
+                    Feedback
+                </a>
+                <div class="navbar-language-toggle">
+                    <button class="navbar-flag-btn active" onclick="switchLanguage('en')">
+                        <span class="navbar-flag">🇺🇸</span>
+                        <span>EN</span>
+                    </button>
+                    <button class="navbar-flag-btn" onclick="switchLanguage('id')">
+                        <span class="navbar-flag">🇮🇩</span>
+                        <span>ID</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="game-title">FLASHINOBI</h1>
+            <p class="subtitle">Feedback Program - Earn Your Credits</p>
+            <div class="platform-info">
+                <span class="material-icons">star</span> <span>Special Recognition Program</span>
+                <span class="material-icons">groups</span> <span>Community Credits</span>
+            </div>
+        </div>
+
+        <div class="section-card day-tracker" id="day-tracker-en">
+            <div class="days-grid">
+                <div class="day-box active" data-day="1">
+                    <div class="day-number">Day 1</div>
+                    <div class="day-date">16 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="2">
+                    <div class="day-number">Day 2</div>
+                    <div class="day-date">17 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="3">
+                    <div class="day-number">Day 3</div>
+                    <div class="day-date">18 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="4">
+                    <div class="day-number">Day 4</div>
+                    <div class="day-date">19 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="5">
+                    <div class="day-number">Day 5</div>
+                    <div class="day-date">20 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="6">
+                    <div class="day-number">Day 6</div>
+                    <div class="day-date">21 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="7">
+                    <div class="day-number">Day 7</div>
+                    <div class="day-date">22 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="8">
+                    <div class="day-number">Day 8</div>
+                    <div class="day-date">23 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="9">
+                    <div class="day-number">Day 9</div>
+                    <div class="day-date">24 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="10">
+                    <div class="day-number">Day 10</div>
+                    <div class="day-date">25 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="11">
+                    <div class="day-number">Day 11</div>
+                    <div class="day-date">26 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="12">
+                    <div class="day-number">Day 12</div>
+                    <div class="day-date">27 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="13">
+                    <div class="day-number">Day 13</div>
+                    <div class="day-date">28 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="14">
+                    <div class="day-number">Day 14</div>
+                    <div class="day-date">29 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card day-tracker" id="day-tracker-id" style="display: none;">
+            <div class="days-grid">
+                <div class="day-box active" data-day="1">
+                    <div class="day-number">Hari 1</div>
+                    <div class="day-date">16 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="2">
+                    <div class="day-number">Hari 2</div>
+                    <div class="day-date">17 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="3">
+                    <div class="day-number">Hari 3</div>
+                    <div class="day-date">18 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="4">
+                    <div class="day-number">Hari 4</div>
+                    <div class="day-date">19 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="5">
+                    <div class="day-number">Hari 5</div>
+                    <div class="day-date">20 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="6">
+                    <div class="day-number">Hari 6</div>
+                    <div class="day-date">21 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="7">
+                    <div class="day-number">Hari 7</div>
+                    <div class="day-date">22 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="8">
+                    <div class="day-number">Hari 8</div>
+                    <div class="day-date">23 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="9">
+                    <div class="day-number">Hari 9</div>
+                    <div class="day-date">24 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="10">
+                    <div class="day-number">Hari 10</div>
+                    <div class="day-date">25 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="11">
+                    <div class="day-number">Hari 11</div>
+                    <div class="day-date">26 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="12">
+                    <div class="day-number">Hari 12</div>
+                    <div class="day-date">27 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="13">
+                    <div class="day-number">Hari 13</div>
+                    <div class="day-date">28 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+                <div class="day-box inactive" data-day="14">
+                    <div class="day-number">Hari 14</div>
+                    <div class="day-date">29 Sep</div>
+                    <div class="day-status">
+                        <span class="material-icons">radio_button_unchecked</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card feedback-program" id="feedback-program-en">
+            <div class="credit-highlight">
+                <h3><span class="material-icons">emoji_events</span> Special Credit Recognition</h3>
+                <p>Submit feedback for <span class="highlight-number">14 consecutive days</span> and your name will be permanently featured in the <strong>In-Game Credits Page</strong>!</p>
+                <p>Your name will appear in the game's credits page, visible to all players who access the credits section. This is our way of thanking dedicated beta testers who help shape the future of Flashinobi.</p>
+                <div class="ingame-preview">
+                    <span class="material-icons">videogame_asset</span>
+                    <span>Your name will be immortalized in the game forever!</span>
+                </div>
+            </div>
+            
+            <div class="name-guidelines">
+                <h4><span class="material-icons">info</span> Name Guidelines</h4>
+                <p style="text-align: center; color: var(--accent-color-2); font-weight: 600; margin-bottom: 20px;">
+                    <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">videogame_asset</span>
+                    Your name will appear in the game's credits page!
+                </p>
+                <div class="guidelines-content">
+                    <div class="guideline-section">
+                        <h5><span class="material-icons">check_circle</span> Good Examples</h5>
+                        <ul>
+                            <li>Real names: "John Smith", "Sarah Johnson"</li>
+                            <li>Gaming nicknames: "NinjaMaster", "FlashWarrior", "GamePro2024"</li>
+                            <li>Creative names: "ShadowNinja", "LightningFlash", "BetaTester"</li>
+                        </ul>
+                    </div>
+                    <div class="guideline-section">
+                        <h5><span class="material-icons">cancel</span> Not Allowed</h5>
+                        <ul>
+                            <li>Inappropriate language or profanity</li>
+                            <li>Offensive or discriminatory terms</li>
+                            <li>Names that impersonate others</li>
+                            <li>Random characters: "asdf123", "xxx", "test"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card feedback-program" id="feedback-program-id" style="display: none;">
+            <div class="credit-highlight">
+                <h3><span class="material-icons">emoji_events</span> Pengakuan Credit Khusus</h3>
+                <p>Kirim feedback selama <span class="highlight-number">14 hari berturut-turut</span> dan nama Anda akan ditampilkan secara permanen di <strong>Halaman Credits In-Game</strong>!</p>
+                <p>Nama Anda akan muncul di halaman credits game, terlihat oleh semua pemain yang mengakses bagian credits. Ini adalah cara kami berterima kasih kepada beta tester yang berdedikasi dan membantu membentuk masa depan Flashinobi.</p>
+                <div class="ingame-preview">
+                    <span class="material-icons">videogame_asset</span>
+                    <span>Nama Anda akan diabadikan dalam game selamanya!</span>
+                </div>
+            </div>
+            
+            <div class="name-guidelines">
+                <h4><span class="material-icons">info</span> Panduan Nama</h4>
+                <p style="text-align: center; color: var(--accent-color-2); font-weight: 600; margin-bottom: 20px;">
+                    <span class="material-icons" style="vertical-align: middle; margin-right: 8px;">videogame_asset</span>
+                    Nama Anda akan muncul di halaman credits game!
+                </p>
+                <div class="guidelines-content">
+                    <div class="guideline-section">
+                        <h5><span class="material-icons">check_circle</span> Contoh yang Baik</h5>
+                        <ul>
+                            <li>Nama asli: "Budi Santoso", "Sari Dewi"</li>
+                            <li>Nama gaming: "NinjaMaster", "FlashWarrior", "GamePro2024"</li>
+                            <li>Nama kreatif: "ShadowNinja", "LightningFlash", "BetaTester"</li>
+                        </ul>
+                    </div>
+                    <div class="guideline-section">
+                        <h5><span class="material-icons">cancel</span> Tidak Diizinkan</h5>
+                        <ul>
+                            <li>Kata-kata tidak pantas atau kasar</li>
+                            <li>Istilah yang menyinggung atau diskriminatif</li>
+                            <li>Nama yang meniru orang lain</li>
+                            <li>Karakter acak: "asdf123", "xxx", "test"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card feedback-form" id="feedback-form-en">
+            <h3><span class="material-icons">rate_review</span> Submit Your Feedback</h3>
+            <p>Ready to start your journey? Click the button below to submit your first feedback and begin your 14-day program!</p>
+            <div class="action-buttons">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdk9USp3M7K43pu6IkVWcoUTwMCdXa5MYoBWLHYEa7PmQgraA/viewform?usp=dialog" target="_blank" class="action-btn feedback-btn">
+                    <span class="material-icons btn-icon">rate_review</span>
+                    <span class="btn-text">Submit Feedback</span>
+                    <span class="btn-subtitle">Start your 14-day journey</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section-card feedback-form" id="feedback-form-id" style="display: none;">
+            <h3><span class="material-icons">rate_review</span> Kirim Feedback Anda</h3>
+            <p>Siap memulai perjalanan Anda? Klik tombol di bawah untuk mengirim feedback pertama dan memulai program 14 hari Anda!</p>
+            <div class="action-buttons">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdk9USp3M7K43pu6IkVWcoUTwMCdXa5MYoBWLHYEa7PmQgraA/viewform?usp=dialog" target="_blank" class="action-btn feedback-btn">
+                    <span class="material-icons btn-icon">rate_review</span>
+                    <span class="btn-text">Kirim Feedback</span>
+                    <span class="btn-subtitle">Mulai perjalanan 14 hari Anda</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section-card credit-info">
+            <h3><span class="material-icons">info</span> Program Requirements</h3>
+            <ul class="requirements-list">
+                <li><span class="material-icons">check_circle</span> Submit feedback form daily for 14 consecutive days</li>
+                <li><span class="material-icons">check_circle</span> Provide meaningful and constructive feedback</li>
+                <li><span class="material-icons">check_circle</span> Include your name and contact information</li>
+                <li><span class="material-icons">check_circle</span> Share your gaming experience and suggestions</li>
+                <li><span class="material-icons">check_circle</span> Help us identify bugs and improvement areas</li>
+            </ul>
+        </div>
+
+        <div class="contact-info section-card">
+            <h3><span class="material-icons">contact_support</span> Get In Touch</h3>
+            <p><i class="fab fa-tiktok" style="font-size: 1.3rem; color: var(--accent-color-1);"></i> <strong>Follow Us:</strong> <a href="https://www.tiktok.com/@kebalik2023" target="_blank">@kebalik2023</a></p>
+            <p><span class="material-icons">laptop_mac</span> <strong>Developer:</strong> Kebalik Studio</p>
+            <p><span class="material-icons">gamepad</span> <strong>Game Version:</strong> Flashinobi v1.0.0</p>
+            <p><span class="material-icons">calendar_month</span> <strong>Beta Testing:</strong> Now Live!</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>
+            <span class="material-icons">sports_martial_arts</span>
+            Flashinobi - Ninja Action Game v1.0.0
+            <span class="material-icons">flash_on</span>
+        </p>
+        <p style="margin-top: 5px; color: #666;">
+            Built with Unity Engine for an extraordinary gaming experience. All rights reserved.
+        </p>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            const enContent = document.getElementById('feedback-program-en');
+            const idContent = document.getElementById('feedback-program-id');
+            const enTracker = document.getElementById('day-tracker-en');
+            const idTracker = document.getElementById('day-tracker-id');
+            
+            // Update both language toggles (top-right and navbar)
+            const enBtnTop = document.querySelector('.language-toggle .flag-btn:first-child');
+            const idBtnTop = document.querySelector('.language-toggle .flag-btn:last-child');
+            const enBtnNav = document.querySelector('.navbar-language-toggle .navbar-flag-btn:first-child');
+            const idBtnNav = document.querySelector('.navbar-language-toggle .navbar-flag-btn:last-child');
+
+            // Get all name guidelines sections
+            const nameGuidelines = document.querySelectorAll('.name-guidelines');
+
+            if (lang === 'en') {
+                enContent.style.display = 'block';
+                idContent.style.display = 'none';
+                enTracker.style.display = 'block';
+                idTracker.style.display = 'none';
+                
+                // Update top toggle
+                enBtnTop.classList.add('active');
+                idBtnTop.classList.remove('active');
+                
+                // Update navbar toggle
+                enBtnNav.classList.add('active');
+                idBtnNav.classList.remove('active');
+                
+                document.documentElement.lang = 'en';
+                
+                // Show English guidelines, hide Indonesian
+                nameGuidelines.forEach((guideline, index) => {
+                    if (index === 0) guideline.style.display = 'block'; // English
+                    if (index === 1) guideline.style.display = 'none';  // Indonesian
+                });
+            } else if (lang === 'id') {
+                enContent.style.display = 'none';
+                idContent.style.display = 'block';
+                enTracker.style.display = 'none';
+                idTracker.style.display = 'block';
+                
+                // Update top toggle
+                enBtnTop.classList.remove('active');
+                idBtnTop.classList.add('active');
+                
+                // Update navbar toggle
+                enBtnNav.classList.remove('active');
+                idBtnNav.classList.add('active');
+                
+                document.documentElement.lang = 'id';
+                
+                // Show Indonesian guidelines, hide English
+                nameGuidelines.forEach((guideline, index) => {
+                    if (index === 0) guideline.style.display = 'none';  // English
+                    if (index === 1) guideline.style.display = 'block'; // Indonesian
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            switchLanguage('en');
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashinobi - Beta Feedback</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0a0c;
+            --secondary-bg: #1a1a2e;
+            --accent-color-1: #ff6b6b; /* Red */
+            --accent-color-2: #4ecdc4; /* Teal */
+            --text-color-light: #e0e0e0;
+            --text-color-medium: #b0b0b0;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-effect: backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 50%, #16213e 100%);
+            color: var(--text-color-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 80px;
+            flex-grow: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .game-title {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2), #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 25px rgba(255, 107, 107, 0.3);
+            animation: textGlow 3s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 20px rgba(255, 107, 107, 0.3), 0 0 30px rgba(78, 205, 196, 0.2); }
+            to { text-shadow: 0 0 25px rgba(78, 205, 196, 0.5), 0 0 35px rgba(255, 107, 107, 0.4); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-color-medium);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .platform-info {
+            font-size: 1rem;
+            color: var(--text-color-medium);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .platform-info .material-icons {
+            font-size: 1.5rem;
+            color: var(--accent-color-2);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 12, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .navbar-language-toggle {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .navbar-flag-btn {
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--text-color-light);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .navbar-flag-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-flag-btn.active {
+            background: linear-gradient(45deg, var(--accent-color-2), #45b7d1);
+            box-shadow: 0 2px 8px rgba(78, 205, 196, 0.3);
+            color: white;
+        }
+
+        .navbar-flag {
+            font-size: 1.1rem;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .nav-btn.download {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .nav-btn.feedback {
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+            color: white;
+        }
+
+        .nav-btn.current {
+            border-color: var(--accent-color-2);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+            display: flex;
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 10px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            max-width: calc(100vw - 40px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .flag-btn {
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: var(--text-color-light);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .flag-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .flag-btn.active {
+            background: linear-gradient(45deg, var(--accent-color-2), #45b7d1);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            color: white;
+        }
+
+        .flag {
+            font-size: 1.3rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.7s ease-in-out;
+        }
+
+        .section-card:hover::before {
+            left: 150%;
+        }
+
+        .beta-feedback h2, .contact-info h3 {
+            font-size: 2.5rem;
+            color: var(--accent-color-2);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+            font-weight: 700;
+        }
+
+        .beta-feedback p {
+            color: var(--text-color-medium);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 40px;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+
+        .feedback-btn {
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: 1;
+        }
+
+        .action-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .action-btn > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-icon {
+            font-size: 2.2rem;
+        }
+
+        .btn-text {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .btn-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .form-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 30px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form-info p {
+            color: var(--text-color-medium);
+            font-size: 0.95rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+        .form-info p .material-icons {
+            font-size: 1.1rem;
+            color: var(--accent-color-2);
+        }
+
+        .game-info {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            align-items: center;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-color-2);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            color: var(--text-color-medium);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .contact-info {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-info p {
+            color: var(--text-color-medium);
+            margin: 12px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .contact-info p .material-icons {
+            font-size: 1.3rem;
+            color: var(--accent-color-1);
+        }
+
+        .contact-info strong {
+            color: var(--accent-color-2);
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer .material-icons {
+            font-size: 1.4rem;
+            vertical-align: middle;
+            margin: 0 8px;
+            animation: float 2s ease-in-out infinite alternate;
+            color: var(--accent-color-2);
+        }
+        .footer .material-icons:nth-child(2) {
+            animation-delay: 0.5s;
+            color: var(--accent-color-1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        a {
+            color: var(--accent-color-2);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color-1);
+            text-decoration: underline;
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 0;
+            }
+            .navbar-content {
+                padding: 0 15px;
+            }
+            .navbar-logo {
+                font-size: 1.5rem;
+            }
+            .navbar-nav {
+                gap: 15px;
+            }
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            .navbar-language-toggle {
+                gap: 6px;
+                padding: 3px;
+            }
+            .navbar-flag-btn {
+                padding: 5px 8px;
+                font-size: 0.8rem;
+                gap: 4px;
+            }
+            .navbar-flag {
+                font-size: 1rem;
+            }
+            .game-title {
+                font-size: 3rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            .container {
+                padding: 15px;
+                padding-top: 90px;
+            }
+            .section-card {
+                padding: 30px 20px;
+                margin: 30px 0;
+            }
+            .beta-feedback h2, .contact-info h3 {
+                font-size: 2rem;
+            }
+            .beta-feedback p {
+                font-size: 1rem;
+            }
+            .action-btn {
+                min-width: unset;
+                width: 90%;
+                padding: 18px 25px;
+            }
+            .language-toggle {
+                top: 15px;
+                right: 15px;
+                gap: 5px;
+                padding: 3px;
+                max-width: calc(100vw - 30px);
+                z-index: 50;
+            }
+            .flag-btn {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+                gap: 5px;
+            }
+            .flag {
+                font-size: 1.1rem;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .contact-info p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 8px 0;
+            }
+            .navbar-content {
+                padding: 0 10px;
+            }
+            .navbar-logo {
+                font-size: 1.3rem;
+            }
+            .navbar-nav {
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .navbar-language-toggle {
+                gap: 4px;
+                padding: 2px;
+            }
+            .navbar-flag-btn {
+                padding: 4px 6px;
+                font-size: 0.7rem;
+                gap: 2px;
+            }
+            .navbar-flag {
+                font-size: 0.8rem;
+            }
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+                max-width: calc(100vw - 20px);
+                gap: 3px;
+                padding: 2px;
+            }
+            .flag-btn {
+                padding: 4px 8px;
+                font-size: 0.8rem;
+                gap: 3px;
+            }
+            .flag {
+                font-size: 1rem;
+            }
+            .container {
+                padding-top: 100px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .navbar-nav {
+                gap: 6px;
+            }
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            .navbar-language-toggle {
+                gap: 3px;
+                padding: 1px;
+            }
+            .navbar-flag-btn {
+                padding: 3px 5px;
+                font-size: 0.65rem;
+                gap: 2px;
+            }
+            .navbar-flag {
+                font-size: 0.75rem;
+            }
+            .container {
+                padding-top: 110px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-toggle">
+        <button class="flag-btn active" onclick="switchLanguage('en')">
+            <span class="flag">🇺🇸</span>
+            <span>EN</span>
+        </button>
+        <button class="flag-btn" onclick="switchLanguage('id')">
+            <span class="flag">🇮🇩</span>
+            <span>ID</span>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="download.html" class="navbar-logo">FLASHINOBI</a>
+            <div class="navbar-nav">
+                <a href="download.html" class="nav-btn download current">
+                    <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">download</span>
+                    Download
+                </a>
+                <a href="feedback.html" class="nav-btn feedback">
+                    <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">rate_review</span>
+                    Feedback
+                </a>
+                <div class="navbar-language-toggle">
+                    <button class="navbar-flag-btn active" onclick="switchLanguage('en')">
+                        <span class="navbar-flag">🇺🇸</span>
+                        <span>EN</span>
+                    </button>
+                    <button class="navbar-flag-btn" onclick="switchLanguage('id')">
+                        <span class="navbar-flag">🇮🇩</span>
+                        <span>ID</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="game-title">FLASHINOBI</h1>
+            <p class="subtitle">Beta Testing - Share Your Experience</p>
+            <div class="platform-info">
+                <span class="material-icons">videogame_asset</span> <span>Unity Game Engine</span>
+                <span class="material-icons">smartphone</span> <span>Android Only</span>
+            </div>
+        </div>
+
+        <div class="section-card beta-feedback" id="beta-feedback-en">
+            <h2><span class="material-icons btn-icon">feedback</span> Beta Testing Feedback</h2>
+            <p>Thank you for participating in Flashinobi Beta Testing! Your feedback is crucial for improving the game before the official release. Please download the game and share your experience with us.</p>
+            
+            <div class="action-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn download-btn">
+                    <i class="fab fa-google-play btn-icon" style="font-size: 2.2rem;"></i>
+                    <span class="btn-text">Download Game</span>
+                    <span class="btn-subtitle">Available on Google Play Store</span>
+                </a>
+                
+                <a href="feedback.html" class="action-btn feedback-btn">
+                    <span class="material-icons btn-icon">rate_review</span>
+                    <span class="btn-text">Send Feedback</span>
+                    <span class="btn-subtitle">Share your experience</span>
+                </a>
+            </div>
+            
+            <div class="form-info">
+                <p><span class="material-icons">check_circle</span> Quick and easy feedback form</p>
+                <p><span class="material-icons">security</span> Your information is safe and secure</p>
+                <p><span class="material-icons">upload</span> You can upload screenshots and videos</p>
+            </div>
+        </div>
+
+        <div class="section-card beta-feedback" id="beta-feedback-id" style="display: none;">
+            <h2><span class="material-icons btn-icon">feedback</span> Feedback Beta Testing</h2>
+            <p>Terima kasih telah berpartisipasi dalam Beta Testing Flashinobi! Feedback Anda sangat penting untuk meningkatkan kualitas game sebelum rilis resmi. Silakan download game dan bagikan pengalaman Anda kepada kami.</p>
+            
+            <div class="action-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn download-btn">
+                    <i class="fab fa-google-play btn-icon" style="font-size: 2.2rem;"></i>
+                    <span class="btn-text">Download Game</span>
+                    <span class="btn-subtitle">Tersedia di Google Play Store</span>
+                </a>
+                
+                <a href="feedback.html" class="action-btn feedback-btn">
+                    <span class="material-icons btn-icon">rate_review</span>
+                    <span class="btn-text">Kirim Feedback</span>
+                    <span class="btn-subtitle">Bagikan pengalaman Anda</span>
+                </a>
+            </div>
+            
+            <div class="form-info">
+                <p><span class="material-icons">check_circle</span> Formulir feedback cepat dan mudah</p>
+                <p><span class="material-icons">security</span> Informasi Anda aman dan terlindungi</p>
+                <p><span class="material-icons">upload</span> Anda bisa upload screenshot dan video</p>
+            </div>
+        </div>
+
+        <div class="game-info section-card">
+            <h2 style="margin-bottom: 30px; font-size: 2.2rem; color: var(--accent-color-2);">Game Overview</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="material-icons info-number">android</span>
+                    <div class="info-label">Platform: Android</div>
+                </div>
+                <div class="info-item">
+                    <span class="material-icons info-number">games</span>
+                    <div class="info-label">Engine: Unity</div>
+                </div>
+                <div class="info-item">
+                    <span class="material-icons info-number">sports_martial_arts</span>
+                    <div class="info-label">Genre: Ninja Action</div>
+                </div>
+                <div class="info-item">
+                    <span class="material-icons info-number">construction</span>
+                    <div class="info-label">Phase: Beta Testing</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info section-card">
+            <h3><span class="material-icons">contact_support</span> Get In Touch</h3>
+            <p><i class="fab fa-tiktok" style="font-size: 1.3rem; color: var(--accent-color-1);"></i> <strong>Follow Us:</strong> <a href="https://www.tiktok.com/@kebalik2023" target="_blank">@kebalik2023</a></p>
+            <p><span class="material-icons">laptop_mac</span> <strong>Developer:</strong> Kebalik Studio</p>
+            <p><span class="material-icons">gamepad</span> <strong>Game Version:</strong> Flashinobi v1.0.0</p>
+            <p><span class="material-icons">calendar_month</span> <strong>Beta Testing:</strong> Now Live!</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>
+            <span class="material-icons">sports_martial_arts</span>
+            Flashinobi - Ninja Action Game v1.0.0
+            <span class="material-icons">flash_on</span>
+        </p>
+        <p style="margin-top: 5px; color: #666;">
+            Built with Unity Engine for an extraordinary gaming experience. All rights reserved.
+        </p>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            const enContent = document.getElementById('beta-feedback-en');
+            const idContent = document.getElementById('beta-feedback-id');
+            
+            // Update both language toggles (top-right and navbar)
+            const enBtnTop = document.querySelector('.language-toggle .flag-btn:first-child');
+            const idBtnTop = document.querySelector('.language-toggle .flag-btn:last-child');
+            const enBtnNav = document.querySelector('.navbar-language-toggle .navbar-flag-btn:first-child');
+            const idBtnNav = document.querySelector('.navbar-language-toggle .navbar-flag-btn:last-child');
+
+            if (lang === 'en') {
+                enContent.style.display = 'block';
+                idContent.style.display = 'none';
+                
+                // Update top toggle
+                enBtnTop.classList.add('active');
+                idBtnTop.classList.remove('active');
+                
+                // Update navbar toggle
+                enBtnNav.classList.add('active');
+                idBtnNav.classList.remove('active');
+                
+                document.documentElement.lang = 'en';
+            } else if (lang === 'id') {
+                enContent.style.display = 'none';
+                idContent.style.display = 'block';
+                
+                // Update top toggle
+                enBtnTop.classList.remove('active');
+                idBtnTop.classList.add('active');
+                
+                // Update navbar toggle
+                enBtnNav.classList.remove('active');
+                idBtnNav.classList.add('active');
+                
+                document.documentElement.lang = 'id';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            switchLanguage('en');
+        });
+    </script>
+</body>
+</html>
