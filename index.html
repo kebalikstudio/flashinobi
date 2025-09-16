@@ -380,6 +380,16 @@
             margin-top: 30px;
         }
 
+        /* Group Download + Register side-by-side */
+        .download-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: stretch;
+            justify-content: center;
+            width: 100%;
+        }
+
         .action-btn {
             display: inline-flex;
             flex-direction: column;
@@ -404,6 +414,10 @@
 
         .feedback-btn {
             background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+        }
+
+        .register-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
         }
 
         .action-btn::after {
@@ -838,12 +852,19 @@
             <p>Thank you for participating in Flashinobi Beta Testing! Your feedback is crucial for improving the game before the official release. Please download the game and share your experience with us.</p>
             
             <div class="action-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn download-btn">
-                    <i class="fab fa-google-play btn-icon" style="font-size: 2.2rem;"></i>
-                    <span class="btn-text">Download Game</span>
-                    <span class="btn-subtitle">Available on Google Play Store</span>
-                </a>
-                
+                <div class="download-group">
+                    <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn download-btn" style="min-width: 220px;">
+                        <i class="fab fa-google-play btn-icon" style="font-size: 2.2rem;"></i>
+                        <span class="btn-text">Download Game</span>
+                        <span class="btn-subtitle">Available on Google Play Store</span>
+                    </a>
+                    <a href="https://shorturl.at/EC2rQ" target="_blank" class="action-btn register-btn" style="min-width: 220px;">
+                        <span class="material-icons btn-icon">how_to_reg</span>
+                        <span class="btn-text">Register</span>
+                        <span class="btn-subtitle">Register before downloading</span>
+                    </a>
+                </div>
+
                 <a href="feedback.html" class="action-btn feedback-btn">
                     <span class="material-icons btn-icon">rate_review</span>
                     <span class="btn-text">Send Feedback</span>
@@ -852,6 +873,7 @@
             </div>
             
             <div class="form-info">
+                <p><span class="material-icons">how_to_reg</span> Note: Please make sure you have registered for the Closed Beta at <a href="https://shorturl.at/EC2rQ" target="_blank" rel="noopener">this link</a> before downloading</p>
                 <p><span class="material-icons">check_circle</span> Quick and easy feedback form</p>
                 <p><span class="material-icons">security</span> Your information is safe and secure</p>
                 <p><span class="material-icons">upload</span> You can upload screenshots and videos</p>
@@ -863,12 +885,19 @@
             <p>Terima kasih telah berpartisipasi dalam Beta Testing Flashinobi! Feedback Anda sangat penting untuk meningkatkan kualitas game sebelum rilis resmi. Silakan download game dan bagikan pengalaman Anda kepada kami.</p>
             
             <div class="action-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn download-btn">
-                    <i class="fab fa-google-play btn-icon" style="font-size: 2.2rem;"></i>
-                    <span class="btn-text">Download Game</span>
-                    <span class="btn-subtitle">Tersedia di Google Play Store</span>
-                </a>
-                
+                <div class="download-group">
+                    <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn download-btn" style="min-width: 220px;">
+                        <i class="fab fa-google-play btn-icon" style="font-size: 2.2rem;"></i>
+                        <span class="btn-text">Download Game</span>
+                        <span class="btn-subtitle">Tersedia di Google Play Store</span>
+                    </a>
+                    <a href="https://shorturl.at/EC2rQ" target="_blank" class="action-btn register-btn" style="min-width: 220px;">
+                        <span class="material-icons btn-icon">how_to_reg</span>
+                        <span class="btn-text">Register</span>
+                        <span class="btn-subtitle">Daftar sebelum mengunduh</span>
+                    </a>
+                </div>
+
                 <a href="feedback.html" class="action-btn feedback-btn">
                     <span class="material-icons btn-icon">rate_review</span>
                     <span class="btn-text">Kirim Feedback</span>
@@ -877,6 +906,7 @@
             </div>
             
             <div class="form-info">
+                <p><span class="material-icons">how_to_reg</span> Catatan: Pastikan Anda sudah mendaftar Closed Beta di <a href="https://shorturl.at/EC2rQ" target="_blank" rel="noopener">tautan ini</a> sebelum download</p>
                 <p><span class="material-icons">check_circle</span> Formulir feedback cepat dan mudah</p>
                 <p><span class="material-icons">security</span> Informasi Anda aman dan terlindungi</p>
                 <p><span class="material-icons">upload</span> Anda bisa upload screenshot dan video</p>
