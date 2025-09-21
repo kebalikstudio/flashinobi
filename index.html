@@ -815,7 +815,7 @@
         <div class="navbar-content">
             <a href="download.html" class="navbar-logo">FLASHINOBI</a>
             <div class="navbar-nav">
-                <a href="download.html" class="nav-btn download current">
+                <a href="download.html" class="nav-btn download current" style="pointer-events: none; cursor: default; opacity: 0.7; filter: grayscale(50%);">
                     <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">download</span>
                     Download
                 </a>
@@ -873,10 +873,22 @@
             </div>
             
             <div class="form-info">
-                <p><span class="material-icons">how_to_reg</span> Note: Please make sure you have registered for the Closed Beta at <a href="https://shorturl.at/EC2rQ" target="_blank" rel="noopener">this link</a> before downloading</p>
-                <p><span class="material-icons">check_circle</span> Quick and easy feedback form</p>
-                <p><span class="material-icons">security</span> Your information is safe and secure</p>
-                <p><span class="material-icons">upload</span> You can upload screenshots and videos</p>
+                <p style="display: flex; align-items: center; justify-content: center; gap: 0; margin: 8px 0;">
+                    <span class="material-icons" style="color: var(--accent-color-2); margin-right: 8px;">how_to_reg</span>
+                    <span>Note: Please make sure you have registered for the Closed Beta at <a href="https://shorturl.at/EC2rQ" target="_blank" rel="noopener">this link</a> before downloading</span>
+                </p>
+                <p style="display: flex; align-items: center; justify-content: center; gap: 0; margin: 8px 0;">
+                    <span class="material-icons" style="color: var(--accent-color-2); margin-right: 8px;">check_circle</span>
+                    <span>Quick and easy feedback form</span>
+                </p>
+                <p style="display: flex; align-items: center; justify-content: center; gap: 0; margin: 8px 0;">
+                    <span class="material-icons" style="color: var(--accent-color-2); margin-right: 8px;">security</span>
+                    <span>Your information is safe and secure</span>
+                </p>
+                <p style="display: flex; align-items: center; justify-content: center; gap: 0; margin: 8px 0;">
+                    <span class="material-icons" style="color: var(--accent-color-2); margin-right: 8px;">upload</span>
+                    <span>You can upload screenshots and videos</span>
+                </p>
             </div>
         </div>
 
