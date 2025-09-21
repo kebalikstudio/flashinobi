@@ -863,7 +863,7 @@
                 right: auto;
                 margin-left: 0;
                 margin-right: 0;
-                padding: 20px 15px;
+                padding: 15px 10px;
                 margin: 15px 0;
                 border-radius: 15px;
             }
@@ -1274,7 +1274,7 @@
                     <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">download</span>
                     Download
                 </a>
-                <a href="feedback.html" class="nav-btn feedback current">
+                <a href="feedback.html" class="nav-btn feedback current" style="pointer-events: none; cursor: default; opacity: 0.7; filter: grayscale(50%);">
                     <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">rate_review</span>
                     Feedback
                 </a>
@@ -1311,35 +1311,35 @@
                         <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box active" data-day="2">
+                <div class="day-box completed" data-day="2">
                     <div class="day-number">Day 2</div>
                     <div class="day-date">17 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="3">
+                <div class="day-box completed" data-day="3">
                     <div class="day-number">Day 3</div>
                     <div class="day-date">18 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="4">
+                <div class="day-box completed" data-day="4">
                     <div class="day-number">Day 4</div>
                     <div class="day-date">19 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="5">
+                <div class="day-box completed" data-day="5">
                     <div class="day-number">Day 5</div>
                     <div class="day-date">20 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="6">
+                <div class="day-box active" data-day="6">
                     <div class="day-number">Day 6</div>
                     <div class="day-date">21 Sep</div>
                     <div class="day-status">
@@ -1407,42 +1407,42 @@
 
         <div class="section-card day-tracker" id="day-tracker-id" style="display: none;">
             <div class="days-grid">
-                <div class="day-box active" data-day="1">
+                <div class="day-box completed" data-day="1">
                     <div class="day-number">Hari 1</div>
                     <div class="day-date">16 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="2">
+                <div class="day-box completed" data-day="2">
                     <div class="day-number">Hari 2</div>
                     <div class="day-date">17 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="3">
+                <div class="day-box completed" data-day="3">
                     <div class="day-number">Hari 3</div>
                     <div class="day-date">18 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="4">
+                <div class="day-box completed" data-day="4">
                     <div class="day-number">Hari 4</div>
                     <div class="day-date">19 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="5">
+                <div class="day-box completed" data-day="5">
                     <div class="day-number">Hari 5</div>
                     <div class="day-date">20 Sep</div>
                     <div class="day-status">
-                        <span class="material-icons">radio_button_unchecked</span>
+                        <span class="material-icons">check_circle</span>
                     </div>
                 </div>
-                <div class="day-box inactive" data-day="6">
+                <div class="day-box active" data-day="6">
                     <div class="day-number">Hari 6</div>
                     <div class="day-date">21 Sep</div>
                     <div class="day-status">
@@ -1511,8 +1511,12 @@
         <div class="section-card feedback-program" id="feedback-program-en">
             <div class="credit-highlight">
                 <h3><span class="material-icons">emoji_events</span> Special Credit Recognition</h3>
-                <p>Submit feedback for <span class="highlight-number">14 consecutive days</span> and your name will be permanently featured in the <strong>In-Game Credits Page</strong>!</p>
-                <p>Your name will appear in the game's credits page, visible to all players who access the credits section. This is our way of thanking dedicated beta testers who help shape the future of Flashinobi.</p>
+                <p>During the beta test period (14 days), you are encouraged to:</p>
+                <div style="text-align: left; margin: 15px 20px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border: 1px solid var(--border-color);">
+                    <p style="margin: 10px 0;"><span class="material-icons" style="vertical-align: middle; margin-right: 10px; color: var(--accent-color-2);">check_circle</span> Submit feedback whenever a new update is released</p>
+                    <p style="margin: 10px 0;"><span class="material-icons" style="vertical-align: middle; margin-right: 10px; color: var(--accent-color-2);">check_circle</span> Provide suggestions for the next update</p>
+                </div>
+                <p>By actively contributing feedback throughout the beta period, your name will be permanently featured in the game's Credits Page.</p>
                 <div class="ingame-preview">
                     <span class="material-icons">videogame_asset</span>
                     <span>Your name will be immortalized in the game forever!</span>
@@ -1549,8 +1553,12 @@
         <div class="section-card feedback-program" id="feedback-program-id" style="display: none;">
             <div class="credit-highlight">
                 <h3><span class="material-icons">emoji_events</span> Pengakuan Credit Khusus</h3>
-                <p>Kirim feedback selama <span class="highlight-number">14 hari berturut-turut</span> dan nama Anda akan ditampilkan secara permanen di <strong>Halaman Credits In-Game</strong>!</p>
-                <p>Nama Anda akan muncul di halaman credits game, terlihat oleh semua pemain yang mengakses bagian credits. Ini adalah cara kami berterima kasih kepada beta tester yang berdedikasi dan membantu membentuk masa depan Flashinobi.</p>
+                <p>Selama periode beta test (14 hari), Anda didorong untuk:</p>
+                <div style="text-align: left; margin: 15px 20px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border: 1px solid var(--border-color);">
+                    <p style="margin: 10px 0;"><span class="material-icons" style="vertical-align: middle; margin-right: 10px; color: var(--accent-color-2);">check_circle</span> Mengirimkan masukan setiap kali update baru dirilis</p>
+                    <p style="margin: 10px 0;"><span class="material-icons" style="vertical-align: middle; margin-right: 10px; color: var(--accent-color-2);">check_circle</span> Memberikan saran untuk update selanjutnya</p>
+                </div>
+                <p>Dengan berkontribusi aktif memberikan masukan sepanjang periode beta, nama Anda akan ditampilkan secara permanen di halaman Credits game.</p>
                 <div class="ingame-preview">
                     <span class="material-icons">videogame_asset</span>
                     <span>Nama Anda akan diabadikan dalam game selamanya!</span>
@@ -1588,7 +1596,7 @@
             <h3><span class="material-icons">rate_review</span> Submit Your Feedback</h3>
             <p>Ready to start your journey? Click the button below to submit your first feedback and begin your 14-day program!</p>
             <div class="action-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn feedback-btn">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdk9USp3M7K43pu6IkVWcoUTwMCdXa5MYoBWLHYEa7PmQgraA/viewform?usp=header" target="_blank" class="action-btn feedback-btn">
                     <span class="material-icons btn-icon">rate_review</span>
                     <span class="btn-text">Submit Feedback</span>
                     <span class="btn-subtitle">Start your 14-day journey</span>
@@ -1600,7 +1608,7 @@
             <h3><span class="material-icons">rate_review</span> Kirim Feedback Anda</h3>
             <p>Siap memulai perjalanan Anda? Klik tombol di bawah untuk mengirim feedback pertama dan memulai program 14 hari Anda!</p>
             <div class="action-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.kebalikstudio.flashinobi" target="_blank" class="action-btn feedback-btn">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdk9USp3M7K43pu6IkVWcoUTwMCdXa5MYoBWLHYEa7PmQgraA/viewform?usp=header" target="_blank" class="action-btn feedback-btn">
                     <span class="material-icons btn-icon">rate_review</span>
                     <span class="btn-text">Kirim Feedback</span>
                     <span class="btn-subtitle">Mulai perjalanan 14 hari Anda</span>
@@ -1610,13 +1618,12 @@
 
         <div class="section-card credit-info">
             <h3><span class="material-icons">info</span> Program Requirements</h3>
+            <p>During the beta test period, you are encouraged to:</p>
             <ul class="requirements-list">
-                <li><span class="material-icons">check_circle</span> Submit feedback form daily for 14 consecutive days</li>
-                <li><span class="material-icons">check_circle</span> Provide meaningful and constructive feedback</li>
-                <li><span class="material-icons">check_circle</span> Include your name and contact information</li>
-                <li><span class="material-icons">check_circle</span> Share your gaming experience and suggestions</li>
-                <li><span class="material-icons">check_circle</span> Help us identify bugs and improvement areas</li>
+                <li><span class="material-icons">check_circle</span> Submit feedback whenever a new update is released, or</li>
+                <li><span class="material-icons">check_circle</span> Provide suggestions for the next update</li>
             </ul>
+            <p>By actively contributing feedback throughout the beta period, your name will be permanently featured in the game's Credits Page.</p>
         </div>
 
         <div class="contact-info section-card">
